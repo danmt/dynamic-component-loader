@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'dynamic-components';
+  @ViewChild('container', { read: ViewContainerRef })
+  containerRef: ViewContainerRef;
+
+  constructor(private appService: AppService) {}
+
+  push(color: string) {
+    this.appService
+      .forChild(this.containerRef, {
+        loadChildren: () =>
+          import('./colored.component').then(m =>
+            m.getComponent(color, 'white')
+          )
+      })
+      .subscribe();
+  }
+
+  clear() {
+    this.containerRef.clear();
+  }
 }
