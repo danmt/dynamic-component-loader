@@ -4,7 +4,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export interface HigherOrderComponent {
   loadChildren: () => Promise<any>;
@@ -19,7 +19,7 @@ export class AppService {
   forChild(vcr: ViewContainerRef, hc: HigherOrderComponent) {
     return from(hc.loadChildren()).pipe(
       map((component: any) => this.cfr.resolveComponentFactory(component)),
-      tap(componentFactory => vcr.createComponent(componentFactory))
+      map(componentFactory => vcr.createComponent(componentFactory))
     );
   }
 }

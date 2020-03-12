@@ -16,7 +16,7 @@ export class AppComponent {
     this.appService
       .forChild(this.containerRef, {
         loadChildren: () =>
-          import('./colored.component').then(m =>
+          import('./colored/colored.component').then(m =>
             m.getComponent(color, 'white')
           )
       })

@@ -1,10 +1,20 @@
 <section>
   <h1>Dynamic components</h1>
 
-  <button (click)="push('blue')">Add Blue</button>
-  <button (click)="push('green')">Add Green</button>
-  <button (click)="push('red')">Add Red</button>
-  <button (click)="clear()">Clear</button>
+  <section>
+    <h2>Colored Component</h2>
 
-  <section #container></section>
+    <button (click)="push('blue')">Add Blue</button>
+    <button (click)="push('green')">Add Green</button>
+    <button (click)="push('red')">Add Red</button>
+    <button (click)="clear()">Clear</button>
+
+    <section #container></section>
+  </section>
+
+  <section>
+    <h2>Profile Component</h2>
+
+    <app-profile-container></app-profile-container>
+  </section>
 </section>
