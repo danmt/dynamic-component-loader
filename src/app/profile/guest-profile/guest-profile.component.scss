@@ -1,4 +1,6 @@
 .card {
+  display: flex;
+
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid #eee;
   max-width: 400px;
@@ -6,7 +8,6 @@
 
   &__title {
     margin: 0 0 0.5rem 0;
-    text-align: center;
   }
 
   &__subtitle {
@@ -14,9 +15,6 @@
   }
 
   &__toolbar {
-    display: flex;
-    justify-content: center;
-
     button {
       text-transform: uppercase;
       padding: 0.3rem 2rem;
@@ -28,5 +26,39 @@
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
       cursor: pointer;
     }
+  }
+}
+
+.container {
+  width: 280px;
+  margin: 0 20px;
+}
+
+.guest-avatar {
+  height: 80px;
+  width: 80px;
+  border: 2px solid #bbb;
+  background: #666;
+  position: relative;
+  overflow: hidden;
+
+  &__head {
+    position: absolute;
+    border-radius: 50%;
+    background: #bbb;
+    width: 35px;
+    height: 35px;
+    top: 15px;
+    left: 22px;
+  }
+
+  &__body {
+    position: absolute;
+    border-radius: 50%;
+    background: #bbb;
+    width: 70px;
+    height: 50px;
+    top: 55px;
+    left: 5px;
   }
 }

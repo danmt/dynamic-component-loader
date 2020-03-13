@@ -1,12 +1,19 @@
 <section class="card">
-  <h2 class="card__title">Guest Profile</h2>
+  <div class="guest-avatar">
+    <div class="guest-avatar__head"></div>
+    <div class="guest-avatar__body"></div>
+  </div>
 
-  <p class="card__subtitle">
-    Thank you for visiting us. If you want to take your experience to the next
-    level, all you need is to log in.
-  </p>
+  <div class="container">
+    <h2 class="card__title">Guest Profile</h2>
 
-  <div class="card__toolbar">
-    <button (click)="login()">Log In</button>
+    <p class="card__subtitle">
+      Thank you for visiting us. If you want to take your experience to the next
+      level, all you need is to log in.
+    </p>
+
+    <div class="card__toolbar">
+      <button (click)="login()">Log In</button>
+    </div>
   </div>
 </section>
