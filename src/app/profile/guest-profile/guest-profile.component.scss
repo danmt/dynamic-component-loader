@@ -1,9 +1,13 @@
+$card-width: 400px;
+$avatar-width: 80px;
+$container-margin: 20px;
+
 .card {
   display: flex;
 
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid #eee;
-  max-width: 400px;
+  width: $card-width;
   padding: 1rem;
 
   &__title {
@@ -30,13 +34,13 @@
 }
 
 .container {
-  width: 280px;
-  margin: 0 20px;
+  width: $card-width - $avatar-width - $container-margin;
+  margin: 0 $container-margin;
 }
 
 .guest-avatar {
   height: 80px;
-  width: 80px;
+  width: $avatar-width;
   border: 2px solid #bbb;
   background: #666;
   position: relative;

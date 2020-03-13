@@ -1,16 +1,35 @@
+$card-width: 400px;
+$avatar-width: 100px;
+$container-margin: 20px;
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid #eee;
-  max-width: 500px;
+  width: $card-width;
   padding: 1rem;
 
+  &__avatar {
+    height: $avatar-width;
+    width: $avatar-width;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
   &__title {
-    margin: 0 0 0.5rem 0;
+    margin: 1rem 0 0.5rem 0;
     text-align: center;
   }
 
   &__subtitle {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 1rem 0;
+    text-align: center;
   }
 
   &__toolbar {
