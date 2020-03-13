@@ -1,0 +1,32 @@
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #eee;
+  max-width: 400px;
+  padding: 1rem;
+
+  &__title {
+    margin: 0 0 0.5rem 0;
+    text-align: center;
+  }
+
+  &__subtitle {
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__toolbar {
+    display: flex;
+    justify-content: center;
+
+    button {
+      text-transform: uppercase;
+      padding: 0.3rem 2rem;
+      background: #145092;
+      border: none;
+      color: white;
+      font-weight: bolder;
+      border-radius: 3px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+  }
+}
