@@ -6,13 +6,10 @@ import { mergeMap } from 'rxjs/operators';
 @Component({
   selector: 'app-profile-container',
   template: `
-    <section>
-      <h3>Profile</h3>
-      <ng-template appProfileHost></ng-template>
-    </section>
+    <ng-template appProfileHost></ng-template>
   `
 })
-export class ProfileContainerComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   @ViewChild(ProfileHostDirective, { static: true })
   profileHost: ProfileHostDirective;
 

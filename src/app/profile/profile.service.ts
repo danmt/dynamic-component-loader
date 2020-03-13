@@ -11,12 +11,16 @@ export class ProfileService {
 
   private guestProfile() {
     return () =>
-      import('./guest-profile.component').then(m => m.GuestProfileComponent);
+      import('./guest-profile/guest-profile.component').then(
+        m => m.GuestProfileComponent
+      );
   }
 
   private clientProfile() {
     return () =>
-      import('./client-profile.component').then(m => m.ClientProfileComponent);
+      import('./client-profile/client-profile.component').then(
+        m => m.ClientProfileComponent
+      );
   }
 
   login() {

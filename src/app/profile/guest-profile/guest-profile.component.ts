@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ProfileService } from './profile.service';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-guest-profile',
-  template: 'Guest Profile <button (click)="login()">Log In</button>'
+  templateUrl: './guest-profile.component.html'
 })
 export class GuestProfileComponent {
   constructor(private profileService: ProfileService) {}
