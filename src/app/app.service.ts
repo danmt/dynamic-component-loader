@@ -6,7 +6,7 @@ import {
 import { from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export interface HigherOrderComponent {
+export interface ComponentLoader {
   loadChildren: () => Promise<any>;
 }
 
@@ -16,8 +16,8 @@ export interface HigherOrderComponent {
 export class AppService {
   constructor(private cfr: ComponentFactoryResolver) {}
 
-  forChild(vcr: ViewContainerRef, hc: HigherOrderComponent) {
-    return from(hc.loadChildren()).pipe(
+  forChild(vcr: ViewContainerRef, cl: ComponentLoader) {
+    return from(cl.loadChildren()).pipe(
       map((component: any) => this.cfr.resolveComponentFactory(component)),
       map(componentFactory => vcr.createComponent(componentFactory))
     );
