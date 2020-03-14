@@ -1,14 +1,8 @@
-$card-width: 400px;
-$avatar-width: 80px;
-$container-margin: 20px;
+@import '~src/assets/styles/mixins.scss';
 
 .card {
   display: flex;
-
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border: 1px solid #eee;
-  width: $card-width;
-  padding: 1rem;
+  @include card();
 
   &__title {
     margin: 0 0 0.5rem 0;
@@ -18,17 +12,36 @@ $container-margin: 20px;
     margin: 0 0 0.5rem 0;
   }
 
-  &__toolbar {
-    button {
-      text-transform: uppercase;
-      padding: 0.3rem 2rem;
-      background: #145092;
-      border: none;
-      color: white;
-      font-weight: bolder;
-      border-radius: 3px;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-      cursor: pointer;
+  &__toolbar button {
+    @include button(#145092);
+  }
+
+  &__avatar {
+    height: 80px;
+    width: $avatar-width;
+    border: 2px solid #bbb;
+    background: #666;
+    position: relative;
+    overflow: hidden;
+
+    &__head {
+      position: absolute;
+      border-radius: 50%;
+      background: #bbb;
+      width: 35px;
+      height: 35px;
+      top: 15px;
+      left: 22px;
+    }
+
+    &__body {
+      position: absolute;
+      border-radius: 50%;
+      background: #bbb;
+      width: 70px;
+      height: 50px;
+      top: 55px;
+      left: 5px;
     }
   }
 }
@@ -36,33 +49,4 @@ $container-margin: 20px;
 .container {
   width: $card-width - $avatar-width - $container-margin;
   margin: 0 $container-margin;
-}
-
-.guest-avatar {
-  height: 80px;
-  width: $avatar-width;
-  border: 2px solid #bbb;
-  background: #666;
-  position: relative;
-  overflow: hidden;
-
-  &__head {
-    position: absolute;
-    border-radius: 50%;
-    background: #bbb;
-    width: 35px;
-    height: 35px;
-    top: 15px;
-    left: 22px;
-  }
-
-  &__body {
-    position: absolute;
-    border-radius: 50%;
-    background: #bbb;
-    width: 70px;
-    height: 50px;
-    top: 55px;
-    left: 5px;
-  }
 }

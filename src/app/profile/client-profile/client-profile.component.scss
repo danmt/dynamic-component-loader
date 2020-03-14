@@ -1,12 +1,7 @@
-$card-width: 400px;
-$avatar-width: 100px;
-$container-margin: 20px;
+@import '~src/assets/styles/mixins.scss';
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border: 1px solid #eee;
-  width: $card-width;
-  padding: 1rem;
+  @include card();
 
   &__avatar {
     height: $avatar-width;
@@ -37,15 +32,7 @@ $container-margin: 20px;
     justify-content: center;
 
     button {
-      text-transform: uppercase;
-      padding: 0.3rem 2rem;
-      background: #a80000;
-      border: none;
-      color: white;
-      font-weight: bolder;
-      border-radius: 3px;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-      cursor: pointer;
+      @include button(#a80000);
     }
   }
 }
