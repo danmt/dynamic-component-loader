@@ -8,6 +8,8 @@ Imagine you have a huge module that consists of multiple components. Every user 
 
 To make it easier, I decided to work on an use case that I know.
 
+If you want to skip ahead and go straight to the code, I created this repository with the [finished version of the app](https://github.com/danmt/dynamic-component-loader). It looks like this:
+
 ## The Problem
 
 Let's say that we have this application, in which users can log in and perform some actions. Regardless of whether the user is a guest or a registered user, they both have a profile page. Each kind of user has different actions they can perform.
