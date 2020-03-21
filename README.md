@@ -476,3 +476,8 @@ And we are done.
 ## Conclusion
 
 I hope that you had as much fun as I while writing this code. Now you know how to dynamically load components with lazy loading, reducing the main bundle size and making the experience better for your users. If you are having any problems, feel free to reach out via comments down below.
+
+*This Dot Labs is a modern web consultancy focused on helping companies realize their digital transformation efforts. For expert architectural guidance, training, or consulting in React, Angular, Vue, Web Components, GraphQL, Node, Bazel, or Polymer, visit [thisdotlabs.com]((https://www.thisdotlabs.com).*
+
+*This Dot Media is focused on creating an inclusive and educational web for all.  We keep you up to date with advancements in the modern web through events, podcasts, and free content. To learn, visit [thisdot.co](https://www.thisdot.co).*
+
