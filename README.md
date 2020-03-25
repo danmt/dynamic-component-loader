@@ -8,7 +8,7 @@ Imagine you have a huge module that consists of multiple components. Every user 
 
 To make it easier, I decided to work on a use case that I know.
 
-![visual representation of the application we are going to build](//images.ctfassets.net/zojzzdop0fzx/6hmB9STqj5BFvDt5EuiKPC/954682af6195a4ce8dd1953252dc4f79/Peek_2020-03-21_19-48.gif)
+![visual representation of the application we are going to build](https://images.ctfassets.net/zojzzdop0fzx/6hmB9STqj5BFvDt5EuiKPC/954682af6195a4ce8dd1953252dc4f79/Peek_2020-03-21_19-48.gif)
 
 If you want to skip ahead, and go straight to the code, I created this repository with the [finished version of the app](https://github.com/danmt/dynamic-component-loader). It looks like this:
 
