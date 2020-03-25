@@ -1,36 +1,38 @@
 # Loading Components Dynamically in Angular 9 with Ivy
 
-The intention of this article is to show how you can start loading components dynamically using Angular 9 with Ivy. This is not precisely new and exclusive of Angular 9, but now we can have components without a module, by making them to load dynamically we get the benefits of lazy loading.
+This article will show you how to start loading components dynamically using Angular 9 with Ivy. This is not exactly new and exclusive to Angular 9, but now we can have components without a module, and by making them load dynamically, we get the benefits of lazy loading.
 
 > Making the story short, we'll reduce the main bundle size by loading only the components we need.
 
-Imagine you have a huge module that consists of multiple components. Every user has unique needs, meaning that they will only use a subset of all the available components. The goal of this article is to explore a possible solution to address it.
+Imagine you have a huge module that consists of multiple components. Every user has unique needs, meaning that they will only use a subset of all the available components. The goal of this article is to explore a possible solution for addressing it.
 
-To make it easier, I decided to work on an use case that I know.
+To make it easier, I decided to work on a use case that I know.
 
-If you want to skip ahead and go straight to the code, I created this repository with the [finished version of the app](https://github.com/danmt/dynamic-component-loader). It looks like this:
+![visual representation of the application we are going to build](//images.ctfassets.net/zojzzdop0fzx/6hmB9STqj5BFvDt5EuiKPC/954682af6195a4ce8dd1953252dc4f79/Peek_2020-03-21_19-48.gif)
+
+If you want to skip ahead, and go straight to the code, I created this repository with the [finished version of the app](https://github.com/danmt/dynamic-component-loader). It looks like this:
 
 ## The Problem
 
-Let's say that we have this application, in which users can log in and perform some actions. Regardless of whether the user is a guest or a registered user, they both have a profile page. Each kind of user has different actions they can perform.
+Let's say that we have this application, with which users can log in and perform some actions. Regardless of whether the user is a guest, or a registered user, they both have a profile page. Each kind of user has different actions that they can perform.
 
 ## Solution
 
-One way to solve this problem would be to use conditionals with the help of the `ngIf` structural directive. This allows us to have a different layout for each, it works, but is it the best way? Remember that now both users have to download the entire component and actions whether or not they use them.
+One way to solve this problem would be to use conditionals with the help of the `ngIf` structural directive. This allows us to have a different layout for each. It works, but is it the best solution? Remember that now both users have to download the entire component and actions, whether or not they use them.
 
 > I want to clarify, I have used the `ngIf` strategy in applications that have been in production for years.
 
-Let's do something different this time, let's create a component for each kind of user and dynamically load them. This way the main bundle won't have any of them and they will be downloaded on demand.
+Let's do something different this time. Let's create a component for each kind of user, and dynamically load them. This way, the main bundle won't have any of them, and they will be downloaded on demand.
 
 ## Implementation
 
-It's time to have fun. Before we start, make sure you have installed the Angular CLI v9, if you need help in this step just drop a comment below. Once you have the right version of the Angular CLI installed follow these steps:
+It's time to have fun. Before we start, make sure you have installed the Angular CLI v9. If you need help on this step, just drop a comment below. Once you have the right version of the Angular CLI installed, follow these steps:
 
 - Open your terminal of choice.
 - Run the command `ng new {your-app-name}`
 - Open the new project in your editor of choice.
 
-Let's start with the loading of components, we are going to create a new service `AppService`. Once created, open it in your editor `src/app/app.service.ts` and paste this:
+Let's start with the loading of components. We are going to create a new service `AppService`. Once you've created it, open it in your editor `src/app/app.service.ts` and paste this:
 
 ```typescript
 import {
@@ -60,15 +62,15 @@ export class AppService {
 }
 ```
 
-At first glance you see `ComponentFactoryResolver`, `ViewContainerRef`, `ComponentLoader` and think:
+At first glance, you see `ComponentFactoryResolver`, `ViewContainerRef`, `ComponentLoader`, and think:
 
 > What kind of sorcery is this?
 
-It's simpler than you think, is just that there are a few new things. We are injecting the `ComponentFactoryResolver` which given a Component returns a Factory that can be used to create new instances of it. The ViewContainerRef is a pointer to an element in which we are going to insert the newly instantiated component. The ComponentLoader is a simple interface, it holds a loadChildren function that returns a Promise, this promise once resolved returns a Component.
+It's simpler than you think. It's just that there are a few new things. We are injecting the `ComponentFactoryResolver`, which, given a Component, returns a Factory that can be used to create new instances of it. The `ViewContainerRef` is a pointer to an element in which we are going to insert the newly instantiated component. The `ComponentLoader` is a simple interface. It holds a `loadChildren` function that returns a Promise. This promise, once resolved, returns a `Component`.
 
-And finally we are just putting everything together, using the from function from rxjs I'm able to transform the promise into an observable, then I'm mapping this component into a factory and finally we inject the component and return the instance.
+And finally, we are just putting everything together. Using the from function from rxjs, I'm able to transform the promise into an observable. Then, I'm mapping this component into a factory, and finally I will inject the component, and return the instance.
 
-Now let's create another service named `ProfileService` that will use the `AppService` to load the respective component. It also holds the loggedIn state. Create a file in `src/app/profile/profile.service.ts`:
+Now, let's create another service named `ProfileService` that will use the `AppService` to load the respective component. It also holds the loggedIn state. Create a file in `src/app/profile/profile.service.ts`:
 
 ```typescript
 import { Injectable, ViewContainerRef } from '@angular/core';
@@ -114,11 +116,11 @@ export class ProfileService {
 }
 ```
 
-This service is way easier to understand, we created a Subject to manage the isLoggedIn state and two methods to many events into the subject. We created two private methods that return a function that returns a Promise of a Component.
+This service is way easier to understand. We created a `Subject` to manage the `isLoggedIn` state, and two methods to many events into the subject. We created two private methods that return a function that returns a `Promise` of a `Component`.
 
 > Yes, just like the ComponentLoader interface.
 
-And finally a magical method, `loadComponent` takes a ViewContainerRef and the isLoggedIn state. Clears the ViewContainerRef emptying it entirely. Then it calls the forChild method from AppService with the ViewContainerRef we just cleaned and for the ComponentLoader it has a ternary expression that determines which Component to load.
+And finally, a magical method: `loadComponent` takes a `ViewContainerRef` and the `isLoggedIn` state. Clears the ViewContainerRef, emptying it entirely. Then, it calls the forChild method from `AppService` with the `ViewContainerRef` we just cleaned, and for the `ComponentLoader`, it has a ternary expression that determines which `Component` to load.
 
 In order to make the loading of the components easier, we are going to create a directive that will help with that. Create a file `src/app/profile/profile-host.directive.ts`:
 
@@ -173,11 +175,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 }
 ```
 
-All we are doing here is creating a simple ng-template in which we attach the ProfileHostDirective, so we can use the ViewChild decorator and get the viewContainerRef. OnInit we are getting the viewContainerRef and using the isLoggedIn\$ observable from ProfileService to know everytime the isLoggedIn state changes, then using the `mergeMap` operator I call the loadComponent function that is doing the real magic.
+All we are doing here is creating a simple `ng-template` in which we attach the `ProfileHostDirective`, so we can use the `ViewChild` decorator, and get the `viewContainerRef`. `OnInit` we are getting the `viewContainerRef`, and using the `isLoggedIn$` observable from `ProfileService` to know everytime the `isLoggedIn` state changes. Then, using the `mergeMap` operator, I call the `loadComponent` function that is doing the real magic.
 
-If you take a look at `src/app/profile/profile.service.ts` you'll notice I'm referencing a GuestProfileComponent and a ClientProfileComponent, now is time to create them.
+If you take a look at `src/app/profile/profile.service.ts`, you'll notice I'm referencing a `GuestProfileComponent`, and a `ClientProfileComponent`. Now it's time to create them.
 
-First go to the `src/styles.scss` and include this:
+First, go to the `src/styles.scss`, and include this:
 
 ```scss
 html,
@@ -187,7 +189,7 @@ body {
 }
 ```
 
-To make the styling easier I created a folder styles inside the assets folder, in which I have 2 scss files:
+To make the styling easier, I created a folder style inside the assets folder, in which I have 2 scss files:
 
 - \_variables.scss
 - \_mixins.scss
@@ -236,9 +238,9 @@ $container-margin: 20px;
 }
 ```
 
-I also created a folder images and included an image named profile.png, you can have any image as long as it's a square.
+I also created a folder images, and included an image named profile.png. You can have any image as long as it's a square.
 
-Let's create the GuestProfileComponent, for this we'll need three files; a template, a stylesheet and a typescript file. Let's start with the template, create a file `src/app/profile/guest-profile/guest-profile.component.html`
+Let's create the `GuestProfileComponent`. For this, we'll need three files; a template, a stylesheet, and a typescript file. Let's start with the template: create a file `src/app/profile/guest-profile/guest-profile.component.html`
 
 ```html
 <section class="card">
@@ -319,7 +321,7 @@ Now let's create the stylesheet in `src/app/profile/guest-profile/guest-profile.
 }
 ```
 
-And finally the typescript file in `src/app/profile/guest-profile/guest-profile.component.ts`:
+And finally, the typescript file in `src/app/profile/guest-profile/guest-profile.component.ts`:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -339,7 +341,7 @@ export class GuestProfileComponent {
 }
 ```
 
-That's great, all we need to do now is to create the ClientProfileComponent, we'll need the same files from the GuestProfileComponent. Let's start by the template `src/app/profile/client-profile/client-profile.component.html`
+That's great! All we need to do now is create the ClientProfileComponent. We'll need the same files from the GuestProfileComponent. Let's start with the template `src/app/profile/client-profile/client-profile.component.html`
 
 ```html
 <section class="card">
@@ -350,8 +352,8 @@ That's great, all we need to do now is to create the ClientProfileComponent, we'
   <h2 class="card__title" contenteditable="true">Daniel Marin</h2>
 
   <p class="card__subtitle" contenteditable="true">
-    Senior Software Engineer at This Dot Labs, a company specialized in Modern
-    Web Technologies, designing and developing software to help companies
+    Senior Software Engineer at This Dot Labs, a company specializing in Modern
+    Web Technologies, designing, and developing software to help companies
     maximize efficiency in their processes.
   </p>
 
@@ -361,7 +363,7 @@ That's great, all we need to do now is to create the ClientProfileComponent, we'
 </section>
 ```
 
-Now let's create the stylesheet in `src/app/profile/client-profile/client-profile.component.scss`:
+Now, let's create the stylesheet in `src/app/profile/client-profile/client-profile.component.scss`:
 
 ```scss
 @import '~src/assets/styles/mixins.scss';
@@ -404,7 +406,7 @@ Now let's create the stylesheet in `src/app/profile/client-profile/client-profil
 }
 ```
 
-And finally the typescript file in `src/app/profile/guest-profile/guest-profile.component.ts`:
+And finally, the typescript file in `src/app/profile/client-profile/client-profile.component.ts`:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -424,7 +426,7 @@ export class ClientProfileComponent {
 }
 ```
 
-This is awesome, but any of this will work until we update the AppComponent, go to `src/app/app.component.html`, remove all its content and put this instead:
+Now, all we have to do is update the AppComponent. Go to `src/app/app.component.html`, remove all its content, and put this instead:
 
 ```html
 <h1 class="header">Dynamic components</h1>
@@ -433,7 +435,7 @@ This is awesome, but any of this will work until we update the AppComponent, go 
 </main>
 ```
 
-And go to `src/app/app.component.scss` and include this:
+Then, go to `src/app/app.component.scss`, and include this:
 
 ```scss
 .header {
@@ -451,7 +453,7 @@ And go to `src/app/app.component.scss` and include this:
 }
 ```
 
-Now the only thing we cannot forget is to add ProfileComponent and ProfileHostDirective to the AppModule declarations array. Go to `src/app/app.module.ts`:
+Now, the only thing we cannot forget to do is add `ProfileComponent`, and `ProfileHostDirective`, to the AppModule declarations array. Go to `src/app/app.module.ts`:
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -475,9 +477,4 @@ And we are done.
 
 ## Conclusion
 
-I hope that you had as much fun as I while writing this code. Now you know how to dynamically load components with lazy loading, reducing the main bundle size and making the experience better for your users. If you are having any problems, feel free to reach out via comments down below.
-
-*This Dot Labs is a modern web consultancy focused on helping companies realize their digital transformation efforts. For expert architectural guidance, training, or consulting in React, Angular, Vue, Web Components, GraphQL, Node, Bazel, or Polymer, visit [thisdotlabs.com]((https://www.thisdotlabs.com).*
-
-*This Dot Media is focused on creating an inclusive and educational web for all.  We keep you up to date with advancements in the modern web through events, podcasts, and free content. To learn, visit [thisdot.co](https://www.thisdot.co).*
-
+I hope that you had as much fun coding this as I did while writing this code. Now you know how to dynamically load components with lazy loading.  With this knowledge, you can reduce the main bundle size, and make the experience better for your users. If you are having any problems, feel free to reach out to me via [Twitter](https://twitter.com/danm_t).
